@@ -22,7 +22,7 @@ import permission from './modules/permission';
 import occupation from './modules/occupation';
 import businesstype from './modules/businesstype';
 import deity from './modules/deity';
-
+import states from './modules/states';
 
 // Load Vuex
 Vue.use(Vuex);
@@ -44,12 +44,13 @@ export default new Vuex.Store({
     maritalstatus,
     course,
     country,
+    states,
     relationship,
     permission,
     occupation,
     businesstype,
-    jobtype,
-    deity,
+    //jobTitletype,
+    deity
 
 
   }
