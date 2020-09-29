@@ -42,12 +42,13 @@
 import { mapGetters } from 'vuex';
 import UCountry from '@/components/country/UCountry.vue';
 import UState from '@/components/state/UState.vue';
-
+import UDistrict from '@/components/district/UDistrict.vue';
+import UCity from '@/components/city/UCity.vue';
 export default {
   name: 'Util',
   data: function() {
     return {
-      kulamTitle: 'Country',
+     
       selectedComponent: 'appCountry',
 
       tabs: [
@@ -59,7 +60,15 @@ export default {
           id: 'state',
           title: 'State',
           selectedComponent: 'appState'
-        },
+        },{
+          id: 'district',
+          title: 'District',
+          selectedComponent: 'appDistrict'
+        },{
+          id: 'area',
+          title: 'Area',
+          selectedComponent: 'appCity'
+        }
 
       ]
     };
@@ -69,7 +78,9 @@ export default {
   },
   components: {
     appCountry: UCountry,
-    appState: UState
+    appState: UState,
+    appDistrict: UDistrict,
+    appCity: UCity,
   }
 };
 </script>   

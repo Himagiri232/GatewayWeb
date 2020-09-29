@@ -4,42 +4,42 @@
   <div 
     v-if="!editing"
   >
-   {{ states.stateName }}
+   {{ city.cityName }}
     <div class="float-sm-right" >
     <button
-      @click="editStates()"
+      @click="editCity()"
       class="btn btn-outline-primary border-0 ml-2"
     >
      <span class="fa fa-edit"></span>
     </button>
-    <button @click="deleteStates()" class="btn btn-outline-danger border-0">
+    <button @click="deleteCity()" class="btn btn-outline-danger border-0">
      <span class="fa fa-trash"></span>
     </button>
 </div>
 </div>
 
-<stateAddForm
+<cityAddForm
         v-else
-        :populateWith="states"
-        @close="editStates"
+        :populateWith="city"
+        @close="editCity"
       />
     </div>
   </li>
 </template>
 
 <script>
-import stateAddForm  from './stateAddForm.vue'
+import cityAddForm  from './cityAddForm.vue'
 
 export default {
   name: 'ListItem',
   props: {
-    states: {
+    city: {
       type: Object,
       required: true
     },
     },
   components: {
-    stateAddForm
+   cityAddForm
   },
   data () {
     return {
@@ -47,10 +47,10 @@ export default {
     }
   },
   methods: {
-    deleteStates () {
+    deleteCity () {
       this.$emit('delete');
     },
-    editStates () {
+    editCity () {
       this.$emit('edit')
       this.editing = !this.editing;
     }

@@ -1,12 +1,23 @@
 <template>
-  <form @submit.prevent="submitStates">
+  <form @submit.prevent="submitCity">
     <div class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }">
       &nbsp;&nbsp;
       <input
         class="w-75 p-3 rounded border border-success justify-center"
-        placeholder="Add State..."
-        v-model.trim="cstates.stateName"
+        placeholder="Add Area.."
+        v-model.trim="city.cityName"
       />
+
+      <input
+        class="w-75 p-3 rounded border border-success justify-center"
+        placeholder="Add Pincode.." list="pinlist"
+        v-model.trim="city.pincode"
+      />
+
+          <datalist id="pinlist">
+             <option v-for="item in getPincodes" :key="item" :value="item" />
+    </datalist>
+
 
       &nbsp;&nbsp;
       <button
@@ -33,7 +44,7 @@
 import {  mapGetters } from 'vuex';
 
 export default {
-  name: 'StateAddForm',
+  name: 'cityAddForm',
   props: {
     populateWith: {
       type: Object,
@@ -41,25 +52,42 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCountrySelected'])
+    ...mapGetters(['getDistrictSelected','getPincodes'])
   
   },
   data() {
     return {
-      cstates: {
-        stateName: ''
+      city: {
+        cityName: '',
+        pincode:''
       },
     };
   },
+mounted() {
+  console.log(' Mount City ');
 
+      this.$store
+      .dispatch('getPincode')
+      .then(() => {
+        console.log('Created in get pin');       
+      })
+      .catch(() => {
+        this.loading = false;
+      });
+       this.loading = false;
+  },
+ 
+ 
  methods: {
     
-    submitStates() {
+    submitCity() {
       this.loading = true;
-      this.cstates.countryId= this.$store.getters.getCountrySelected.id;
-      if (this.cstates.stateName !== '') {
+      this.city.district= this.$store.getters.getDistrictSelected;
+      this.city.state= this.$store.getters.getStateSelected;
+      this.city.country= this.$store.getters.getCountrySelected;
+      if (this.city.cityName !== '' && this.city.pincode !== '') {
         this.$store
-        .dispatch('addStates', this.cstates)
+        .dispatch('addCity', this.city)
         .then(() => {
           this.saved();
           if (!this.isEditing) 
@@ -74,8 +102,8 @@ export default {
       }
     },
     clearForm() {
-      this.cstates = {
-        stateName: ''
+      this.city = {
+        cityName: ''
       };
 //      this.isCountrySelected=false;
     },
@@ -85,14 +113,14 @@ export default {
       this.isEditing = false;
     },
     saved() {
-      if (!this.cstates.empty) {
-        this.populateWith.stateName = this.cstates.stateName;
+      if (!this.city.empty) {
+        this.populateWith.cityName = this.city.cityName;
       }
     }
   },
   created() {
     if (!this.populateWith.empty) {
-      this.cstates = Object.assign({}, this.populateWith);
+      this.city = Object.assign({}, this.populateWith);
       //this.country = this.populateWith
     }
   }

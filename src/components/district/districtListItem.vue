@@ -4,42 +4,42 @@
   <div 
     v-if="!editing"
   >
-   {{ states.stateName }}
+   {{ district.districtName }}
     <div class="float-sm-right" >
     <button
-      @click="editStates()"
+      @click="editdistrict()"
       class="btn btn-outline-primary border-0 ml-2"
     >
      <span class="fa fa-edit"></span>
     </button>
-    <button @click="deleteStates()" class="btn btn-outline-danger border-0">
+    <button @click="deletedistrict()" class="btn btn-outline-danger border-0">
      <span class="fa fa-trash"></span>
     </button>
 </div>
 </div>
 
-<stateAddForm
+<districtAddForm
         v-else
-        :populateWith="states"
-        @close="editStates"
+        :populateWith="district"
+        @close="editdistrict"
       />
     </div>
   </li>
 </template>
 
 <script>
-import stateAddForm  from './stateAddForm.vue'
+import districtAddForm  from './districtAddForm.vue'
 
 export default {
   name: 'ListItem',
   props: {
-    states: {
+    district: {
       type: Object,
       required: true
     },
     },
   components: {
-    stateAddForm
+   districtAddForm
   },
   data () {
     return {
@@ -47,10 +47,10 @@ export default {
     }
   },
   methods: {
-    deleteStates () {
+    deletedistrict () {
       this.$emit('delete');
     },
-    editStates () {
+    editdistrict () {
       this.$emit('edit')
       this.editing = !this.editing;
     }

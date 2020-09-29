@@ -18,7 +18,7 @@ const actions = {
   async login({ commit }, operator) {
     return new Promise((resolve, reject) => {
       return axios.post(API_URL + 'gw/authenticate', operator).then(response => {
-        console.log(response)
+       console.log(response.data.userName);
         commit('SET_AUTH', response.data);
         resolve(response);
       })
@@ -28,76 +28,23 @@ const actions = {
         });
     });
   },
-  /*async  [ADDKULAM]({ commit }, kulam) {
-    console.log("in add kulam");
-    return new Promise((resolve, reject) => {
-      console.log("in Promise");
-      return axios.post(API_URL + 'gws/addkulam', kulam,{ headers }).then(response => {
-      //return axios.post(API_URL + 'gws/addkulam', kulam).then(response => {
-          console.log(response.data)
-          commit('SET_MESSAGE', response.data.message, true);
-          resolve(response);
-        })
-        .catch(error => {
-          console.log(error.response.data.message);
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          reject(error);
-        });
-    });
-  },
-  async  [GETKULAM]({ commit }) {
-    return new Promise((resolve, reject) => {
-      return axios.get(API_URL + 'gws/getkulams','',{ headers }).then(response => {
-      //return axios.post(API_URL + 'gws/addkulam', kulam).then(response => {
-          console.log('get action Kulam');
 
-          console.log(response.data)
-          commit('SET_KULAMS', response.data);
-          resolve(response);
-        })
-        .catch(error => {
-         // console.log(error.response.data.message);
-         // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          reject(error);
-        });
-    });
+  
+  async saveCountry({ commit }, saveCountry) {
+    commit('set_saveCountry', saveCountry);
   },
-*/
-/*
-  async  [ADDEDUCATION]({ commit }, education) {
-    return new Promise((resolve, reject) => {
-      return axios.post(API_URL + 'gws/addeducation', education,{ headers }).then(response => {
-        console.log(response.data)
-          commit('SET_MESSAGE', response.data.message, true);
-          resolve(response);
-        })
-        .catch(error => {
-          console.log(error.response.data.message);
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          reject(error);
-        });
-    });
+
+  async saveStates({ commit }, saveState) {
+    commit('set_saveState', saveState);
+  },
+
+  async saveDistrict({ commit }, saveDistrict) {
+    commit('set_saveDistrit', saveDistrict);
   },
 
   
-  async  'getEducation_action'({ commit }) {
-    return new Promise((resolve, reject) => {
-      return axios.get(API_URL + 'gws/geteducation','',{ headers }).then(response => {
-      //return axios.post(API_URL + 'gws/addkulam', kulam).then(response => {
-          console.log('get action education');
 
-          console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
-          resolve(response);
-        })
-        .catch(error => {
-         // console.log(error.response.data.message);
-         // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          reject(error);
-        });
-    });
-  },
-  */
+  
   LOGOUT(context) {
     console.log('logout action')
     context.commit('PURGE_AUTH');

@@ -2,7 +2,7 @@
 <template>
   <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
     <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-      Add State</h1>
+      Add District </h1>
 
   <div class="flex flex-col mt-20 mx-4  sm:justify-center">
 
@@ -14,17 +14,20 @@
   
     <span>Selected: {{ selectedCountry }}</span>
 
+<select id="select1" v-model="selectedState"  class="browser-default custom-select" v-on:change="stateSelected()" >
+        <option v-for="item in getStates" v-bind:value="item" :key="item.stateName">
+        {{ item.stateName }}</option>
+      </select>
+ <span>Selected: {{ selectedState }}</span>
+    <districtAddForm submit="addDistrict" />
 
-
-    <stateAddForm submit="addState" />
-
-    <ul id="state-list" class = "child1">
+    <ul id="district-list" class = "child1">
       <list-item 
-        v-for="(states) in getStates"
-        :key="states.id"
-        :states="states"
-        @delete="deleteStates(states)"
-        @edit="editStates"
+        v-for="(district) in getDistrict"
+        :key="district.id"
+        :district="district"
+        @delete="deleteDistrict(district)"
+        @edit="editDistrict"
       />
     </ul>
   </div>
@@ -33,28 +36,29 @@
 
 <script>
 import {  mapActions,mapGetters } from 'vuex';
-import stateAddForm from './stateAddForm.vue'
-import ListItem from './stateListItem.vue'
+import districtAddForm from './districtAddForm.vue'
+import ListItem from './districtListItem.vue'
 
 export default {
-  name: 'StateList',
+  name: 'DistrictList',
   components: {
-    stateAddForm,
+    districtAddForm,
     ListItem
   }, 
 
 computed: {
-    ...mapGetters(['getStates','getCountry'])
+    ...mapGetters(['getStates','getCountry','getDistrict'])
   
   },
 data(){
 
 return {
   
-    selectedCountry:''
+    selectedCountry:'',
+    selectedState:''
 }
  },mounted() {
-  console.log(' Mount State Country');
+  console.log(' Mount district Country');
 
     this.$store
       .dispatch('getCountry')
@@ -69,7 +73,7 @@ return {
  
  
   methods: {
-    ...mapActions(['addState','deleteStates']),
+    ...mapActions(['addDistrict','deleteDistrict']),
      countrySelected: function (){
          this.loading = true;
       console.log('countrySelected :'+  this.selectedCountry.id);
@@ -96,8 +100,34 @@ return {
       });
 
   },
+
+   stateSelected: function (){
+         this.loading = true;
+      console.log('stateSelected :'+  this.selectedState.id);
+      this.$store
+      .dispatch('saveStates',this.selectedState)
+      .then(() => {
+        console.log('Created in get is State Selected'); 
+       this.getDistrictUpdate(this.selectedState.id);
+      })
+      .catch(() => {
+      
+      });
+     this.loading = false;
+
+    },
+  getDistrictUpdate(stateId){
+   this.$store.dispatch('getDistricts',stateId)
+      .then(() => {
+        console.log('Created in get state');
+      })
+      .catch(() => {
+       
+      });
+
+  },
   
-    editStates(){
+    editDistrict(){
     } 
 }
 }

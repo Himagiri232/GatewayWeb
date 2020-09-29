@@ -1,17 +1,17 @@
+//import state from "./state";
+
 const getters = {
   currentUser(state) {
-    console.log('currentUser');
     if(state.isAuthenticated==true){
-      console.log('currentUser'+state.operator.userName);
       return state.operator;
-    }
-     
-    else{
-      
+    }  else{
       console.log('state.isAuthenticated is false');
       return null;
     }
      
+  },
+  currentUserName(state){
+  return state.currentUserName;
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
@@ -21,6 +21,21 @@ const getters = {
   },
   isSuccess(state) {
     return state.success;
+  },
+  getCountrySelected(state){
+    console.log('CountrySelected'+state.selectedCountry.id);
+    
+    return state.selectedCountry;
+  },
+  getStateSelected(state){
+    console.log('StateSelected'+state.selectedState.id);
+    
+    return state.selectedState;
+  },
+  getDistrictSelected(state){
+    console.log('StateSelected'+state.selectedDistrict.id);
+    
+    return state.selectedDistrict;
   },
   /*getKulams(state) {
     console.log('get Kulam');
